@@ -33,7 +33,7 @@ extension SectionsViewController: UICollectionViewDelegateFlowLayout, UICollecti
         let currentItem = sections[indexPath.item]
         switch currentItem.title {
         case "Characters":
-            NetworkManager.shared.getCharacters(page: 1) { result in
+            NetworkManager.shared.getCharacters(page: 1, name: "") { result in
                 switch result {
                 case .success(let characters):
                     DispatchQueue.main.async {

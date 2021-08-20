@@ -37,6 +37,10 @@ extension CharactersController: UICollectionViewDelegateFlowLayout, UICollection
         navigationController?.pushViewController(characterInfoController, animated: true)
     }
     
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchController.searchBar.endEditing(true)
+    }
+    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         guard hasNextPage else {
             return
@@ -46,7 +50,7 @@ extension CharactersController: UICollectionViewDelegateFlowLayout, UICollection
         let scrollViewFrameHeight = scrollView.frame.size.height
         
         if (position + scrollViewFrameHeight) > contentHeight {
-            NetworkManager.shared.getCharacters(page: nextPage) { [weak self] result in
+            NetworkManager.shared.getCharacters(page: nextPage, name: searchBarText) { [weak self] result in
                 switch result {
                 case .success(let newData):
                     self?.characters.results.append(contentsOf: newData.results)
@@ -57,6 +61,60 @@ extension CharactersController: UICollectionViewDelegateFlowLayout, UICollection
                 case .failure:
                     break
                 }
+            }
+        }
+    }
+}
+
+extension CharactersController: UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text, !searchText.isEmpty else {
+            NetworkManager.shared.getCharacters(page: 1, name: "") { [weak self] result in
+                switch result {
+                case .success(let newData):
+                    self?.characters.results = newData.results
+                    self?.nextPage = 2
+                    DispatchQueue.main.async {
+                        self?.collectionView.reloadData()
+                    }
+                case .failure:
+                    break
+                }
+            }
+            return
+        }
+        searchTask?.cancel()
+        nextPage = 2
+        let task = DispatchWorkItem {
+            DispatchQueue.global(qos: .userInteractive).async {
+                NetworkManager.shared.getCharacters(page: 1, name: searchText) { [weak self] result in
+                    switch result {
+                    case .success(let newData):
+                        self?.characters.results = newData.results
+                        DispatchQueue.main.async {
+                            self?.collectionView.reloadData()
+                        }
+                    case .failure:
+                        break
+                    }
+                }
+            }
+        }
+        searchTask = task
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: task)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        NetworkManager.shared.getCharacters(page: 1, name: "") { [weak self] result in
+            switch result {
+            case .success(let newData):
+                self?.characters.results = newData.results
+                self?.nextPage = 2
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
+            case .failure:
+                break
             }
         }
     }
