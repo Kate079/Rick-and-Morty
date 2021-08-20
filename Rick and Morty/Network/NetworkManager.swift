@@ -13,8 +13,8 @@ class NetworkManager {
     private let baseURL = "https://rickandmortyapi.com/api"
     private let cache = NSCache<NSString, UIImage>()
     
-    func getCharacters(page: Int, completionHandler: @escaping (Result<CharactersResponse, Errors>) -> Void) {
-        let endpoint = baseURL + "/character?page=\(page)"
+    func getCharacters(page: Int, name: String, completionHandler: @escaping (Result<CharactersResponse, Errors>) -> Void) {
+        let endpoint = baseURL + "/character?page=\(page)&name=\(name)"
         guard let url = URL(string: endpoint) else {
             completionHandler(.failure(.URLError))
             return

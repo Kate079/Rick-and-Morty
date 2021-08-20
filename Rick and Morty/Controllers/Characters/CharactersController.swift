@@ -9,11 +9,17 @@ import UIKit
 
 class CharactersController: UIViewController {
     var characters: CharactersResponse
+    var searchCharacters: [Characters]?
     var collectionView: UICollectionView!
-    var searchController: UISearchController!
     var hasNextPage = true
     var nextPage = 2
-        
+    var searchTask: DispatchWorkItem?
+    let searchController = UISearchController(searchResultsController: nil)
+    var searchBarText: String {
+        guard let text = searchController.searchBar.text, !text.isEmpty else { return "" }
+        return text
+    }
+    
     init(characters: CharactersResponse) {
         self.characters = characters
         super.init(nibName: nil, bundle: nil)
@@ -68,11 +74,9 @@ class CharactersController: UIViewController {
     }
 
     private func configureSearchController() {
-        searchController = UISearchController()
         searchController.obscuresBackgroundDuringPresentation = false
-//        searchController.searchResultsUpdater = self
-//        searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = ""
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         searchController.searchBar.isHidden = false
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
