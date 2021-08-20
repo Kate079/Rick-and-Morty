@@ -40,6 +40,7 @@ class CharactersController: UIViewController {
             view.addSubview(EmptyStateView(frame: view.bounds))
         } else {
             configureUI()
+            configureNavigationBar()
             configureCollectionView()
             configureSearchController()
         }
@@ -47,12 +48,27 @@ class CharactersController: UIViewController {
     
     private func configureUI() {
         view.backgroundColor = UIColor.customGray
-        
+    }
+    
+    private func configureNavigationBar() {
         navigationItem.titleView = HeadlineTitleLabel(text: "Characters")
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = UIColor.customGreen
-        let filterImage = Images.filterImage?.withRenderingMode(.alwaysOriginal)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: filterImage, style: .plain, target: nil, action: nil)
+        let rightBarButton = UIButton()
+        rightBarButton.setImage(Images.filterImage, for: .normal)
+        rightBarButton.addTarget(self, action: #selector(filter), for: .touchUpInside)
+        rightBarButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            rightBarButton.heightAnchor.constraint(equalToConstant: 30),
+            rightBarButton.widthAnchor.constraint(equalTo: rightBarButton.heightAnchor)
+        ])
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightBarButton)
+    }
+    
+    @objc private func filter() {
+        
     }
     
     private func configureCollectionView() {
