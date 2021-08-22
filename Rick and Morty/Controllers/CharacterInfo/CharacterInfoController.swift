@@ -16,7 +16,7 @@ class CharacterInfoController: UIViewController {
     private let genderLabel = NormalTextLabel()
     private let locationLabel = NormalTextLabel()
     private let stringAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.customGreen]
-    private lazy var stackView = CharacterInfoStackView(arrangedSubviews: [nameLabel, statusLabel, speciesLabel, genderLabel, locationLabel])
+    private lazy var stackView = StackView(arrangedSubviews: [nameLabel, statusLabel, speciesLabel, genderLabel, locationLabel])
     
     init(characters: Characters) {
         self.characters = characters
@@ -79,7 +79,6 @@ class CharacterInfoController: UIViewController {
             imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
             
             stackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
-            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
