@@ -1,5 +1,5 @@
 //
-//  CharacterInfoStackView.swift
+//  StackView.swift
 //  Rick and Morty
 //
 //  Created by Kate on 12.08.2021.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CharacterInfoStackView: UIStackView {
+class StackView: UIStackView {
     init(arrangedSubviews: [UIView]) {
         super.init(frame: .zero)
         configure(arrangedSubviews: arrangedSubviews)
