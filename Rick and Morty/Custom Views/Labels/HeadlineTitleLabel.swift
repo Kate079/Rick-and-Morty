@@ -21,7 +21,7 @@ class HeadlineTitleLabel: UILabel {
         self.text = text
         font = UIFont.boldSystemFont(ofSize: 24)
         textAlignment = .center
-        textColor = UIColor.customGreen
+        textColor = .customGreen
         translatesAutoresizingMaskIntoConstraints = false
         adjustsFontSizeToFitWidth = true
         minimumScaleFactor = 0.75

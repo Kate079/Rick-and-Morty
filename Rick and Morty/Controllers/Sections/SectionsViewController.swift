@@ -32,8 +32,9 @@ class SectionsViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = UIColor.customGray
+        view.backgroundColor = .customGray
         navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.tintColor = .customGreen
         navigationController?.navigationBar.isTranslucent = true
         navigationItem.backButtonTitle = ""
         view.addSubview(sectionNameLabel)

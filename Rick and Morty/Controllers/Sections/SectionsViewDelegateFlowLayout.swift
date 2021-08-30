@@ -53,11 +53,10 @@ extension SectionsViewController: UICollectionViewDelegateFlowLayout, UICollecti
         case "Locations":
             NetworkManager.shared.getLocations(page: 1) { result in
                 switch result {
-                case .success(let locations):
+                case .success:
                     DispatchQueue.main.async {
                         loadingViewController.dismiss(animated: true) {
-//                            let locationsController = LocationsController(locations: locations)
-//                            self.navigationController?.pushViewController(locationsController, animated: true)
+                            Alert.showAlert(on: self, title: "Something Went Wrong", message: "Sorry, this feature is currently unavailable")
                         }
                     }
                 case .failure(let error):
@@ -71,11 +70,10 @@ extension SectionsViewController: UICollectionViewDelegateFlowLayout, UICollecti
         case "Episodes":
             NetworkManager.shared.getEpisodes(page: 1) { result in
                 switch result {
-                case .success(let episodes):
+                case .success:
                     DispatchQueue.main.async {
                         loadingViewController.dismiss(animated: true) {
-//                            let episodesController = EpisodesController(episodes: episodes)
-//                            self.navigationController?.pushViewController(episodesController, animated: true)
+                            Alert.showAlert(on: self, title: "Something Went Wrong", message: "Sorry, this feature is currently unavailable")
                         }
                     }
                 case .failure(let error):

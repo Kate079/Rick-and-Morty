@@ -9,7 +9,6 @@ import UIKit
 
 class CharactersController: UIViewController {
     var characters: CharactersResponse
-    var searchCharacters: [Characters]?
     var collectionView: UICollectionView!
     var hasNextPage = true
     var nextPage = 2
@@ -47,13 +46,13 @@ class CharactersController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = UIColor.customGray
+        view.backgroundColor = .customGray
     }
     
     private func configureNavigationBar() {
         navigationItem.titleView = HeadlineTitleLabel(text: "Characters")
         navigationItem.backButtonTitle = ""
-        navigationController?.navigationBar.tintColor = UIColor.customGreen
+        navigationController?.navigationBar.tintColor = .customGreen
         let rightBarButton = UIButton()
         rightBarButton.setImage(Images.filterImage, for: .normal)
         rightBarButton.addTarget(self, action: #selector(filter), for: .touchUpInside)
