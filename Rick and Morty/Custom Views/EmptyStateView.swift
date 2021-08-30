@@ -21,7 +21,7 @@ class EmptyStateView: UIView {
     }
     
     private func configure() {
-        backgroundColor = UIColor.customGray
+        backgroundColor = .customGray
         messageLabel.numberOfLines = 2
         emptyStateLogo.image = Images.emptyStateLogo
         emptyStateLogo.contentMode = .scaleAspectFit

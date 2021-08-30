@@ -20,7 +20,7 @@ class SubheadlineTitleLabel: UILabel {
     private func configure(fontSize: CGFloat) {
         font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
         textAlignment = .center
-        textColor = UIColor.black
+        textColor = .black
         translatesAutoresizingMaskIntoConstraints = false
         adjustsFontSizeToFitWidth = true
         minimumScaleFactor = 0.75

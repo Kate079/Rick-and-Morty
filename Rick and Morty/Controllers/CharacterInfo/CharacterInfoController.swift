@@ -68,7 +68,7 @@ class CharacterInfoController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = UIColor.customGray
+        view.backgroundColor = .customGray
         view.addSubview(imageView)
         view.addSubview(stackView)
         
