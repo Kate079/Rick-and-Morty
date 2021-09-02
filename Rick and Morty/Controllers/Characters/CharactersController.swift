@@ -67,7 +67,7 @@ class CharactersController: UIViewController {
     }
     
     @objc private func filter() {
-        
+        Alert.showAlert(on: self, title: "Something Went Wrong", message: "Sorry, this feature is currently unavailable")
     }
     
     private func configureCollectionView() {

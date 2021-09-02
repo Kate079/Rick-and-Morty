@@ -33,7 +33,8 @@ extension SectionsViewController: UICollectionViewDelegateFlowLayout, UICollecti
         let currentItem = sections[indexPath.item]
         switch currentItem.title {
         case "Characters":
-            NetworkManager.shared.getCharacters(page: 1, name: "") { result in
+            NetworkManager.shared.getCharacters(page: 1, name: "") { [weak self] result in
+                guard let self = self else { return }
                 switch result {
                 case .success(let characters):
                     DispatchQueue.main.async {
@@ -51,12 +52,15 @@ extension SectionsViewController: UICollectionViewDelegateFlowLayout, UICollecti
                 }
             }
         case "Locations":
-            NetworkManager.shared.getLocations(page: 1) { result in
+            NetworkManager.shared.getLocations(page: 1) { [weak self] result in
+                guard let self = self else { return }
                 switch result {
                 case .success:
                     DispatchQueue.main.async {
                         loadingViewController.dismiss(animated: true) {
-                            Alert.showAlert(on: self, title: "Something Went Wrong", message: "Sorry, this feature is currently unavailable")
+                            let emptyStateViewController = UIViewController()
+                            emptyStateViewController.view.addSubview(EmptyStateView(frame: emptyStateViewController.view.bounds))
+                            self.navigationController?.pushViewController(emptyStateViewController, animated: true)
                         }
                     }
                 case .failure(let error):
@@ -68,12 +72,15 @@ extension SectionsViewController: UICollectionViewDelegateFlowLayout, UICollecti
                 }
             }
         case "Episodes":
-            NetworkManager.shared.getEpisodes(page: 1) { result in
+            NetworkManager.shared.getEpisodes(page: 1) { [weak self] result in
+                guard let self = self else { return }
                 switch result {
                 case .success:
                     DispatchQueue.main.async {
                         loadingViewController.dismiss(animated: true) {
-                            Alert.showAlert(on: self, title: "Something Went Wrong", message: "Sorry, this feature is currently unavailable")
+                            let emptyStateViewController = UIViewController()
+                            emptyStateViewController.view.addSubview(EmptyStateView(frame: emptyStateViewController.view.bounds))
+                            self.navigationController?.pushViewController(emptyStateViewController, animated: true)
                         }
                     }
                 case .failure(let error):
