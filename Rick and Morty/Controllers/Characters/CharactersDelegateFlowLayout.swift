@@ -95,7 +95,10 @@ extension CharactersController: UISearchResultsUpdating, UISearchBarDelegate {
                             self?.collectionView.reloadData()
                         }
                     case .failure:
-                        break
+                        self?.characters.results = []
+                        DispatchQueue.main.async {
+                            self?.collectionView.reloadData()
+                        }
                     }
                 }
             }
